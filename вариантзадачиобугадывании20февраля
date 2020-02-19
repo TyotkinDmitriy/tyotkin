@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 19 22:35:53 2020
+
+@author: tetkindmitrijandreevic
+"""
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 19 22:15:59 2020
+
+@author: tetkindmitrijandreevic
+"""
+
+import numpy as np
+
+def score_game(game_core_v1):
+    '''Запускаем игру 1000 раз, чтоб узнать как быстро игра угадывает число'''
+    count_ls = []
+    np.random.seed(1)  # фиксируем RANDOM SEED, чтобы ваш эксперимент был воспроизводим!
+    random_array = np.random.randint(1, 101, size=(1000))
+    for number in random_array:
+        count_ls.append(game_core_v1(number))
+    score = (np.mean(count_ls))
+    print(version)
+    print(f"Ваш алгоритм угадывает число в среднем за {score} попыток")
+    """ print (count_ls)  # публикует данные про количество попыток"""
+    return(score)
+
+ 
+
+def game_core_v1(number):
+    '''Просто угадываем на random ни как не используя информацию о больше или меньше.
+       Функция Принимает загаданное число и возвращает число попыток'''
+    count = 0
+    global version 
+    version = "версия один"
+    while True:
+        count+=1
+        predict = np.random.randint(1, 101) # предполагаемое число
+        if number == predict: 
+            break
+    return(count) # выход из цикла, если угадали
+    
+        
+
+
+# запускаем
+score_game(game_core_v1)
+
+def game_core_v2(number):
+    '''Сначала устанавливаем любое random число, а потом уменьшаем или увеличиваем его
+       в зависимости от того, больше оно или меньше нужного.
+       Функция принимает загаданное число и возвращает число попыток'''
+    count = 0
+    global version 
+    version = "версия два"
+    predict = np.random.randint(1,100)
+    while number != predict:
+        count+=1
+        if number > predict: 
+            predict += 1
+        elif number < predict: 
+            predict -= 1
+    return(count) # выход из цикла, если угадали
+
+# Проверяем
+score_game(game_core_v2)
+
+
+def game_core_v3(number):
+    '''увеличиваем или уменьшаем на случайное число, которое подобрано 
+    опытным путём как оптимальное'''
+    count = 0
+    global version 
+    version = "версия три"
+    predict = np.random.randint(1,100)
+    while number != predict:
+        count+=1
+        if number > predict: 
+            predict += np.random.randint(1,9)
+        elif number < predict: 
+            predict -= np.random.randint(1,9)
+    return(count) # выход из цикла, если угадали
+
+# Проверяем
+score_game(game_core_v3)
+
+
+def game_core_v4(number):
+    '''угадываем в диапазоне, который уменьшается в два раза'''
+    count = 0
+    global version 
+    version = "версия четыре"
+    predict = 50
+    diapozon = 50
+    
+    while number != predict:
+        count+=1
+      
+        diapozon=round((diapozon/2)+1)
+        """print(diapozon) """ 
+        if number > predict: 
+            predict += diapozon-1
+        elif number < predict: 
+            predict -= diapozon+1
+    return(count) # выход из цикла, если угадали
+
+# Проверяем
+score_game(game_core_v4) 
+
+
+
+
